@@ -99,9 +99,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   startScreenRecord(bool audio) async {
-    print('startScreenRecord: audio $audio');
+    print('${DateTime.now()} startScreenRecord: audio $audio');
     bool start = false;
-    await Future.delayed(const Duration(milliseconds: 1000));
+    // await Future.delayed(const Duration(milliseconds: 1000));
     int width, height;
     // // Record screen at quarter size, ie file size reduced by x16
     // Size win = window.physicalSize / 4; // Reduce size
@@ -124,7 +124,7 @@ class _MyAppState extends State<MyApp> {
 
     if (start) {
       setState(() => recording = !recording);
-      print("Recording started at $_time");
+      print("${DateTime.now()} Recording started at $_time");
     }
 
     return start;

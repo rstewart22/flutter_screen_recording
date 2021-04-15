@@ -142,9 +142,14 @@ public class SwiftFlutterScreenRecordingPlugin: NSObject, FlutterPlugin {
                     case RPSampleBufferType.video:
                         //                         NSLog("startRecording: Writing video...");
                         if self.videoWriter?.status == AVAssetWriter.Status.unknown {
-                            self.myResult!(true)
                             self.videoWriter?.startWriting()
-                            self.videoWriter?.startSession(atSourceTime:  CMSampleBufferGetPresentationTimeStamp(cmSampleBuffer))
+                            self.myResult!(true)
+                            // self.videoWriter?.startSession(atSourceTime:  CMSampleBufferGetPresentationTimeStamp(cmSampleBuffer))
+                            // Fix to avoid empty frame being recorded intermittently. See https://stackoverflow.com/a/48507994
+                            let start_recording_time = CMSampleBufferGetPresentationTimeStamp(cmSampleBuffer);
+                            let startingTimeDelay = CMTimeMakeWithSeconds(0.5, preferredTimescale: 1000000000);
+                            let startTimeToUse = CMTimeAdd(start_recording_time, startingTimeDelay)
+                            self.videoWriter?.startSession(atSourceTime: startTimeToUse)
                         }else if self.videoWriter?.status == AVAssetWriter.Status.writing {
                             if (self.videoWriterInput?.isReadyForMoreMediaData == true) {
                                 //                                print("Append sample...");
