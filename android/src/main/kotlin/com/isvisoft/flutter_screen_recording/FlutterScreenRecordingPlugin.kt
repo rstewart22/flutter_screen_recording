@@ -97,6 +97,7 @@ class FlutterScreenRecordingPlugin(
                 mProjectionManager = registrar.context()
                         .applicationContext.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager?
 
+
                 videoName = call.argument<String?>("name")
                 recordAudio = call.argument<Boolean?>("audio")
                 val width = call.argument<Int?>("width");
@@ -105,7 +106,7 @@ class FlutterScreenRecordingPlugin(
                 setVideoDimensions(width, height);
                 initMediaRecorder();
                 startRecordScreen()
-                //result.success(true)
+//                result.success(true)
             } catch (e: Exception) {
                 Log.e(_TAG, "onMethodCall/startRecordScreen: error", e);
                 result.success(false)
@@ -183,6 +184,7 @@ class FlutterScreenRecordingPlugin(
                 // Ask for permission.
                 Log.d(_TAG, "startRecordScreen: asking permission");
                 val permissionIntent = mProjectionManager?.createScreenCaptureIntent();
+
                 ActivityCompat.startActivityForResult(
                         registrar.activity(),
                         permissionIntent!!,
