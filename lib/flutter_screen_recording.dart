@@ -126,6 +126,6 @@ class FlutterScreenRecording {
   }
 
   static void globalForegroundService() {
-    print("current datetime is ${DateTime.now()}");
+    // print("current datetime is ${DateTime.now()}");
   }
 }
