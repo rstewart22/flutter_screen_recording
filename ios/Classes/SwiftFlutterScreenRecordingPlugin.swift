@@ -92,7 +92,7 @@ public class SwiftFlutterScreenRecordingPlugin: NSObject, FlutterPlugin {
             recorder.isMicrophoneEnabled = recordAudio
             
             let videoSettings: [String : Any] = [
-                AVVideoCodecKey  : AVVideoCodecH264,
+                AVVideoCodecKey  : AVVideoCodecType.h264,
                 AVVideoWidthKey  : NSNumber.init(value: width),
                 AVVideoHeightKey : NSNumber.init(value:height),
                 AVVideoCompressionPropertiesKey: [
@@ -133,14 +133,14 @@ public class SwiftFlutterScreenRecordingPlugin: NSObject, FlutterPlugin {
                 recorder.startCapture(handler: { (cmSampleBuffer, rpSampleType, error) in
                     guard error == nil else {
                         //Handle error
-                        print("Error starting capture");
+                        NSLog("startRecording/startCapture: Error starting capture " + error.debugDescription);
                         self.myResult!(false)
                         return;
                     }
                     
                     switch rpSampleType {
                     case RPSampleBufferType.video:
-                        //                         NSLog("startRecording: Writing video...");
+//                                                  NSLog("startRecording: Writing video...");
                         if self.videoWriter?.status == AVAssetWriter.Status.unknown {
                             self.videoWriter?.startWriting()
                             self.myResult!(true)
@@ -161,7 +161,7 @@ public class SwiftFlutterScreenRecordingPlugin: NSObject, FlutterPlugin {
                         }
                     case RPSampleBufferType.audioMic:
                         if(self.recordAudio){
-                            //                            print("Writing audio....");
+                                                        print("Writing audio....");
                             if self.audioInput?.isReadyForMoreMediaData == true {
                                 //                                NSLog("startRecording: starting audio....");
                                 if self.audioInput?.append(cmSampleBuffer) == false {
@@ -176,7 +176,7 @@ public class SwiftFlutterScreenRecordingPlugin: NSObject, FlutterPlugin {
                 } ){(error) in
                     guard error == nil else {
                         //Handle error
-                        print("Screen record not allowed");
+                        NSLog("**** startRecording: Screen record not allowed: error " + error.debugDescription);
                         self.myResult!(false)
                         return;
                     }
