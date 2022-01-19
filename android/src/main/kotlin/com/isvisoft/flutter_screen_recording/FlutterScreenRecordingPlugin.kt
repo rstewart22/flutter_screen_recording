@@ -188,7 +188,7 @@ class FlutterScreenRecordingPlugin(
 
         } catch (e: IOException) {
             println("ERR");
-            Log.d("--INIT-RECORDER", e.message)
+            Log.d("--INIT-RECORDER", e.message ?: "No Message")
             println("Error startRecordScreen")
             println(e.message)
         }
@@ -206,7 +206,7 @@ class FlutterScreenRecordingPlugin(
             println("stopRecordScreen success")
 
         } catch (e: Exception) {
-            Log.d("--INIT-RECORDER", e.message)
+            Log.d("--INIT-RECORDER", e.message ?: "No Message")
             println("stopRecordScreen error")
             println(e.message)
 
